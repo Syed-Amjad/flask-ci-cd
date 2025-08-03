@@ -9,7 +9,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/yourusername/flask-ci-cd-demo'
+                git 'https://github.com/Syed-Amjad/flask-ci-cd.git'
             }
         }
 

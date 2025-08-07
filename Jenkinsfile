@@ -15,13 +15,20 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest test_app.py'
+                sh '''
+                    . venv/bin/activate
+                    pytest test_app.py
+                '''
             }
         }
 
@@ -42,7 +49,7 @@ pipeline {
 
     post {
         failure {
-            mail to: 'syed.rulzz.1993@gmail.com',
+            mail to: 'youremail@example.com',
                  subject: "Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: "Something is wrong with ${env.JOB_NAME} #${env.BUILD_NUMBER}.\n\nCheck Jenkins for details: ${env.BUILD_URL}"
         }
